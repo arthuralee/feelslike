@@ -5,10 +5,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "./components/HomeScreen";
 import SettingsScreen from "./components/SettingsScreen";
+import UnitsScreen from "./components/UnitsScreen";
 
 enableScreens();
 
 const Stack = createStackNavigator();
+
+const settingsHeaderOptions = {
+  headerTintColor: "#000",
+  headerBackTitleVisible: false,
+};
 
 export default function App() {
   return (
@@ -24,10 +30,12 @@ export default function App() {
         <Stack.Screen
           name="Settings"
           component={SettingsScreen}
-          options={{
-            headerTintColor: "#000",
-            headerBackTitleVisible: false,
-          }}
+          options={settingsHeaderOptions}
+        />
+        <Stack.Screen
+          name="Units"
+          component={UnitsScreen}
+          options={settingsHeaderOptions}
         />
       </Stack.Navigator>
     </NavigationContainer>

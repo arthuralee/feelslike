@@ -8,34 +8,41 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { Linking } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
-function Item({ title, onPress }) {
-  return (
-    <TouchableHighlight onPress={onPress}>
-      <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    </TouchableHighlight>
-  );
-}
+import ItemSeparator from "./ItemSeparator";
+import TableRowItem from "./TableRowItem";
+import TableRowHeader from "./TableRowHeader";
 
-function ItemSeparator() {
-  return <View style={styles.itemSeparator} />;
-}
-
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <SectionList
         sections={[
           {
             title: "General",
-            data: [<Item title="Units" key="units" onPress={() => {}} />],
+            data: [
+              <TableRowItem
+                title="Units"
+                key="units"
+                icon={
+                  <Ionicons
+                    name="ios-flask"
+                    size={20}
+                    color="rgba(0,0,0,0.4)"
+                  />
+                }
+                rightElement={<Text style={styles.rightTitle}>Fahrenheit</Text>}
+                onPress={() => {
+                  navigation.navigate("Units");
+                }}
+              />,
+            ],
           },
           {
             title: "Credits",
             data: [
-              <Item
+              <TableRowItem
                 title="Powered by Dark Sky"
                 key="poweredby"
                 onPress={() =>
@@ -47,7 +54,7 @@ export default function SettingsScreen() {
         ]}
         renderItem={({ item }) => item}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
+          <TableRowHeader title={title} />
         )}
         ItemSeparatorComponent={ItemSeparator}
       />
@@ -59,26 +66,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  item: {
-    backgroundColor: "#fff",
-    padding: 15,
-  },
-  header: {
-    backgroundColor: "#f3f3f3",
-    color: "#999",
-    fontSize: 13,
-    fontWeight: "bold",
-    paddingTop: 20,
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-    textTransform: "uppercase",
-  },
-  title: {
+  rightTitle: {
     fontSize: 16,
-    color: "#333",
-  },
-  itemSeparator: {
-    height: 1,
-    backgroundColor: "#f3f3f3",
+    color: "#aaa",
   },
 });
