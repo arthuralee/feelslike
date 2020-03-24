@@ -1,3 +1,4 @@
+import { enableScreens } from "react-native-screens";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -5,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import LastUpdatedLabel from "./components/LastUpdatedLabel";
 import WeatherBlock from "./components/WeatherBlock";
 import Mountains from "./components/Mountains";
+
+enableScreens();
 
 export default function App() {
   return (
