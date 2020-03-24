@@ -1,12 +1,19 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import LastUpdatedLabel from "./LastUpdatedLabel";
 import WeatherBlock from "./WeatherBlock";
 import Mountains from "./Mountains";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.background}>
       <ScrollView>
@@ -34,7 +41,11 @@ export default function HomeScreen() {
 
       <View style={styles.settingsButtonContainer}>
         <SafeAreaView>
-          <Ionicons name="ios-settings" size={32} color="rgba(0,0,0,0.4)" />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("Settings")}
+          >
+            <Ionicons name="ios-settings" size={32} color="rgba(0,0,0,0.4)" />
+          </TouchableWithoutFeedback>
         </SafeAreaView>
       </View>
 
