@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import LastUpdatedLabel from "./LastUpdatedLabel";
 import WeatherBlock from "./WeatherBlock";
 import Mountains from "./Mountains";
+import SettingsButton from "./SettingsButton";
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -41,11 +42,7 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.settingsButtonContainer}>
         <SafeAreaView>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate("Settings")}
-          >
-            <Ionicons name="ios-settings" size={32} color="rgba(0,0,0,0.4)" />
-          </TouchableWithoutFeedback>
+          <SettingsButton onPress={() => navigation.navigate("Settings")} />
         </SafeAreaView>
       </View>
 
