@@ -1,20 +1,22 @@
 import React from "react";
 import {
   StyleSheet,
-  View,
   Text,
   SafeAreaView,
   SectionList,
-  TouchableHighlight,
+  Settings,
 } from "react-native";
 import { Linking } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
+import { AppState } from "../store/reducer";
 import ItemSeparator from "./ItemSeparator";
 import TableRowItem from "./TableRowItem";
 import TableRowHeader from "./TableRowHeader";
+import { getLabelFromUnit } from "../util/units";
 
-export default function SettingsScreen({ navigation }) {
+function SettingsScreen({ navigation, selectedTempUnit }) {
   return (
     <SafeAreaView style={styles.container}>
       <SectionList
@@ -32,7 +34,11 @@ export default function SettingsScreen({ navigation }) {
                     color="rgba(0,0,0,0.4)"
                   />
                 }
-                rightElement={<Text style={styles.rightTitle}>Fahrenheit</Text>}
+                rightElement={
+                  <Text style={styles.rightTitle}>
+                    {getLabelFromUnit(selectedTempUnit)}
+                  </Text>
+                }
                 onPress={() => {
                   navigation.navigate("Units");
                 }}
@@ -71,3 +77,7 @@ const styles = StyleSheet.create({
     color: "#aaa",
   },
 });
+
+export default connect((state: AppState) => ({
+  selectedTempUnit: state.tempUnit,
+}))(SettingsScreen);
