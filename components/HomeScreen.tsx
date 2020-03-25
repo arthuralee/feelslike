@@ -26,13 +26,13 @@ export default function HomeScreen({ navigation }) {
             timeLabel="Right now"
             label="T-shirt"
             colorScale={1}
-            temperature={71}
+            temperature={21.5}
           />
           <WeatherBlock
             timeLabel="Later"
             label="Light jacket"
             colorScale={2}
-            temperature={63}
+            temperature={17}
           />
           <View style={styles.lastUpdatedContainer}>
             <LastUpdatedLabel />

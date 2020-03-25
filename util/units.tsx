@@ -4,10 +4,10 @@ export function getLabelFromUnit(unit: TempUnit) {
   return unit === "C" ? "Celsius" : "Fahrenheit";
 }
 
-export function convert(value: number, to: TempUnit) {
-  if (to === "F") {
-    return value * (9 / 5) + 32;
+export function displayTemp(value: number, tempUnit: TempUnit) {
+  if (tempUnit === "F") {
+    return Math.round(value * (9 / 5) + 32);
   } else {
-    return ((value - 32) * 5) / 9;
+    return Math.round(value);
   }
 }

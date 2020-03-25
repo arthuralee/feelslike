@@ -1,7 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { connect } from "react-redux";
+
 import ConditionLabel from "./ConditionLabel";
+import { displayTemp } from "../util/units";
 
 const COLORS = {
   1: ["#45B9CB", "#A5DA82"],
@@ -11,11 +14,12 @@ const COLORS = {
   5: ["#E170E0", "#B65050"],
 };
 
-export default function WeatherBlock({
+function WeatherBlock({
   timeLabel,
   label,
   colorScale,
   temperature,
+  selectedTempUnit,
 }) {
   return (
     <View style={styles.shadowContainer}>
@@ -25,7 +29,9 @@ export default function WeatherBlock({
       >
         <View style={styles.topContainer}>
           <Text style={styles.timeText}>{timeLabel}</Text>
-          <Text style={styles.tempText}>{temperature}º</Text>
+          <Text style={styles.tempText}>
+            {displayTemp(temperature, selectedTempUnit)}º
+          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <ConditionLabel text={label} />
@@ -86,3 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default connect(state => ({
+  selectedTempUnit: state.tempUnit,
+}))(WeatherBlock);
