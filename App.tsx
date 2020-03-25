@@ -4,8 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { AsyncStorage } from "react-native";
 
 import reducer from "./store/reducer";
+import BlankScreen from "./components/BlankScreen";
 import HomeScreen from "./components/HomeScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import UnitsScreen from "./components/UnitsScreen";
@@ -14,7 +18,16 @@ enableScreens();
 
 const Stack = createStackNavigator();
 
-const store = createStore(reducer);
+// Redux and persistence setup
+const persistedReducer = persistReducer(
+  {
+    key: "root",
+    storage: AsyncStorage,
+  },
+  reducer
+);
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 const settingsHeaderOptions = {
   headerTintColor: "#000",
@@ -24,27 +37,29 @@ const settingsHeaderOptions = {
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={settingsHeaderOptions}
-          />
-          <Stack.Screen
-            name="Units"
-            component={UnitsScreen}
-            options={settingsHeaderOptions}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PersistGate persistor={persistor} loading={<BlankScreen />}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={settingsHeaderOptions}
+            />
+            <Stack.Screen
+              name="Units"
+              component={UnitsScreen}
+              options={settingsHeaderOptions}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }
