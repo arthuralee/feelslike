@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   settingsButtonContainer: {
     position: "absolute",
     top: 0,
-    right: 20,
+    right: 15,
   },
   lastUpdatedContainer: {
     marginLeft: 23,
