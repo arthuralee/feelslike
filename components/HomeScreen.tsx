@@ -27,12 +27,6 @@ export default function HomeScreen({ navigation }) {
             colorScale={1}
             temperature={21.5}
           />
-          <WeatherBlock
-            timeLabel="Later"
-            label="Light jacket"
-            colorScale={2}
-            temperature={17}
-          />
           <View style={styles.lastUpdatedContainer}>
             <LastUpdatedLabel />
           </View>
