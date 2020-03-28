@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
 
 import LastUpdatedLabel from "./LastUpdatedLabel";
 import Mountains from "./Mountains";
-import SettingsButton from "./SettingsButton";
+import SettingsButton from "./settings/SettingsButton";
 import CurrentWeatherBlock from "./CurrentWeatherBlock";
 
 export default function HomeScreen({ navigation }) {

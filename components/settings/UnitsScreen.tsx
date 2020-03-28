@@ -3,8 +3,8 @@ import { StyleSheet, View, SafeAreaView, SectionList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
-import { AppState, setTempUnit } from "../store/reducer";
-import { getLabelFromUnit } from "../util/units";
+import { AppState, setTempUnit } from "../../store/reducer";
+import { getLabelFromUnit } from "../../util/units";
 import TableRowItem from "./TableRowItem";
 import TableRowHeader from "./TableRowHeader";
 import ItemSeparator from "./ItemSeparator";

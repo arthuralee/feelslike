@@ -10,11 +10,11 @@ import { Linking } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
-import { AppState } from "../store/reducer";
+import { AppState } from "../../store/reducer";
 import ItemSeparator from "./ItemSeparator";
 import TableRowItem from "./TableRowItem";
 import TableRowHeader from "./TableRowHeader";
-import { getLabelFromUnit } from "../util/units";
+import { getLabelFromUnit } from "../../util/units";
 
 function SettingsScreen({ navigation, selectedTempUnit }) {
   return (
@@ -34,13 +34,23 @@ function SettingsScreen({ navigation, selectedTempUnit }) {
                     color="rgba(0,0,0,0.4)"
                   />
                 }
-                rightElement={
-                  <Text style={styles.rightTitle}>
-                    {getLabelFromUnit(selectedTempUnit)}
-                  </Text>
-                }
+                rightLabel={getLabelFromUnit(selectedTempUnit)}
                 onPress={() => {
                   navigation.navigate("Units");
+                }}
+              />,
+              <TableRowItem
+                title="Customize recommendations"
+                key="recs"
+                icon={
+                  <Ionicons
+                    name="ios-build"
+                    size={20}
+                    color="rgba(0,0,0,0.4)"
+                  />
+                }
+                onPress={() => {
+                  navigation.navigate("Customize recomendations");
                 }}
               />,
             ],
@@ -71,10 +81,6 @@ function SettingsScreen({ navigation, selectedTempUnit }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  rightTitle: {
-    fontSize: 16,
-    color: "#aaa",
   },
 });
 

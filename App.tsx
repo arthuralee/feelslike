@@ -11,8 +11,9 @@ import { AsyncStorage } from "react-native";
 import reducer from "./store/reducer";
 import BlankScreen from "./components/BlankScreen";
 import HomeScreen from "./components/HomeScreen";
-import SettingsScreen from "./components/SettingsScreen";
-import UnitsScreen from "./components/UnitsScreen";
+import SettingsScreen from "./components/settings/SettingsScreen";
+import UnitsScreen from "./components/settings/UnitsScreen";
+import RecsScreen from "./components/settings/RecsScreen";
 
 enableScreens();
 
@@ -55,6 +56,11 @@ export default function App() {
             <Stack.Screen
               name="Units"
               component={UnitsScreen}
+              options={settingsHeaderOptions}
+            />
+            <Stack.Screen
+              name="Customize recomendations"
+              component={RecsScreen}
               options={settingsHeaderOptions}
             />
           </Stack.Navigator>
