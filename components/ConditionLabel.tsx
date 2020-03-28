@@ -11,7 +11,15 @@ export default function ConditionLabel({ text }) {
       setIsFontReady(true);
     });
   });
-  return isFontReady ? <Text style={styles.conditionText}>{text}</Text> : null;
+  return isFontReady ? (
+    <Text
+      style={styles.conditionText}
+      adjustsFontSizeToFit={true}
+      numberOfLines={1}
+    >
+      {text}
+    </Text>
+  ) : null;
 }
 
 const styles = StyleSheet.create({

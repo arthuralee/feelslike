@@ -4,10 +4,20 @@ export const SET_TEMP_UNIT = "SET_TEMP_UNIT";
 
 export type AppState = {
   tempUnit: TempUnit;
+  tempThresholds: Array<number>;
+  tempThresholdLabels: Array<string>;
 };
 
 const initialState: AppState = {
   tempUnit: "F",
+  tempThresholds: [8, 12, 15, 20],
+  tempThresholdLabels: [
+    "Winter jacket",
+    "Coat",
+    "Sweater",
+    "Light jacket",
+    "T-shirt",
+  ],
 };
 
 export default function reducer(state = initialState, action) {

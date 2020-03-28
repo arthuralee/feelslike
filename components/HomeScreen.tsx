@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
 
 import LastUpdatedLabel from "./LastUpdatedLabel";
-import WeatherBlock from "./WeatherBlock";
 import Mountains from "./Mountains";
 import SettingsButton from "./SettingsButton";
+import CurrentWeatherBlock from "./CurrentWeatherBlock";
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -21,12 +14,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>San Francisco</Text>
           </View>
-          <WeatherBlock
-            timeLabel="Right now"
-            label="T-shirt"
-            colorScale={1}
-            temperature={21.5}
-          />
+          <CurrentWeatherBlock temperature={4} />
           <View style={styles.lastUpdatedContainer}>
             <LastUpdatedLabel />
           </View>

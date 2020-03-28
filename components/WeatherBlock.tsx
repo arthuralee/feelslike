@@ -6,13 +6,13 @@ import { connect } from "react-redux";
 import ConditionLabel from "./ConditionLabel";
 import { displayTemp } from "../util/units";
 
-const COLORS = {
-  1: ["#45B9CB", "#A5DA82"],
-  2: ["#70B5E1", "#9594E7"],
-  3: ["#707BE1", "#E094E7"],
-  4: ["#6D8BE5", "#D75CAE"],
-  5: ["#E170E0", "#B65050"],
-};
+const COLORS = [
+  ["#E170E0", "#B65050"],
+  ["#6D8BE5", "#D75CAE"],
+  ["#707BE1", "#E094E7"],
+  ["#70B5E1", "#9594E7"],
+  ["#45B9CB", "#A5DA82"],
+];
 
 function WeatherBlock({
   timeLabel,
