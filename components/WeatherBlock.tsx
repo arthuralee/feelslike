@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
 
-import ConditionLabel from "./ConditionLabel";
+import RecommendationLabel from "./RecommendationLabel";
 import { displayTemp } from "../util/units";
 
 const COLORS = [
@@ -34,7 +34,7 @@ function WeatherBlock({
           </Text>
         </View>
         <View style={styles.bottomContainer}>
-          <ConditionLabel text={label} />
+          <RecommendationLabel text={label} />
         </View>
       </LinearGradient>
     </View>
@@ -66,12 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "white",
     fontWeight: "300",
-  },
-  condition: {
-    fontFamily: "FredokaOne-Regular",
-    fontSize: 48,
-    color: "white",
-    marginTop: -5,
   },
   tempText: {
     fontWeight: "700",

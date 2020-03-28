@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import * as Font from "expo-font";
 
-export default function ConditionLabel({ text }) {
+export default function RecommendationLabel({ text }) {
   const [isFontReady, setIsFontReady] = useState(false);
   useEffect(() => {
     Font.loadAsync({
@@ -13,7 +13,7 @@ export default function ConditionLabel({ text }) {
   });
   return isFontReady ? (
     <Text
-      style={styles.conditionText}
+      style={styles.recommendationText}
       adjustsFontSizeToFit={true}
       numberOfLines={1}
     >
@@ -23,7 +23,7 @@ export default function ConditionLabel({ text }) {
 }
 
 const styles = StyleSheet.create({
-  conditionText: {
+  recommendationText: {
     fontFamily: "FredokaOne-Regular",
     fontSize: 48,
     color: "white",
