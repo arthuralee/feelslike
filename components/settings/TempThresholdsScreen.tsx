@@ -1,21 +1,63 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, SectionList } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  SectionList,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { connect } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
-import { AppState, setTempThresholdLabel } from "../../store/reducer";
+import {
+  AppState,
+  incrementTempThreshold,
+  decrementTempThreshold,
+} from "../../store/reducer";
 import { displayTemp } from "../../util/units";
-import TableRowItem from "./TableRowItem";
 import TableRowHeader from "./TableRowHeader";
 import ItemSeparator from "./ItemSeparator";
 
-const TempThresholdRow = connect((state: AppState) => ({
-  selectedTempUnit: state.tempUnit,
-}))(({ temp, selectedTempUnit }) => (
-  <TableRowItem
-    title={`${displayTemp(temp, selectedTempUnit)}º ${selectedTempUnit}`}
-    onPress={() => {}}
-  />
-));
+const StepButton = ({ iconName, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.5}
+    style={styles.stepButton}
+    onPress={onPress}
+  >
+    <Ionicons name={iconName} size={40} color="#ccc" />
+  </TouchableOpacity>
+);
+
+const TempThresholdRow = connect(
+  (state: AppState) => ({
+    selectedTempUnit: state.tempUnit,
+  }),
+  { incrementTempThreshold, decrementTempThreshold }
+)(
+  ({
+    temp,
+    selectedTempUnit,
+    index,
+    incrementTempThreshold,
+    decrementTempThreshold,
+  }) => (
+    <View style={styles.item}>
+      <StepButton
+        iconName="md-remove-circle"
+        onPress={() => decrementTempThreshold(index)}
+      />
+      <Text style={styles.title}>{`${displayTemp(
+        temp,
+        selectedTempUnit
+      )}º ${selectedTempUnit}`}</Text>
+      <StepButton
+        iconName="md-add-circle"
+        onPress={() => incrementTempThreshold(index)}
+      />
+    </View>
+  )
+);
 
 function TempThresholdsScreen({ tempThresholds }) {
   return (
@@ -25,7 +67,7 @@ function TempThresholdsScreen({ tempThresholds }) {
           {
             title: "Thresholds",
             data: tempThresholds.map((temp, i) => (
-              <TempThresholdRow temp={temp} />
+              <TempThresholdRow temp={temp} index={i} />
             )),
           },
         ]}
@@ -43,6 +85,20 @@ function TempThresholdsScreen({ tempThresholds }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 5,
+    justifyContent: "space-around",
+  },
+  title: {
+    fontSize: 25,
+    color: "#333",
+  },
+  stepButton: {
+    padding: 20,
   },
 });
 
