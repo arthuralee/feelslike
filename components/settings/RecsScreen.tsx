@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView, SectionList } from "react-native";
+import { StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { connect } from "react-redux";
 
-import { AppState, setTempUnit } from "../../store/reducer";
+import { AppState, setTempThresholdLabel } from "../../store/reducer";
 import { displayTemp } from "../../util/units";
 import TableRowItem from "./TableRowItem";
 import TableRowHeader from "./TableRowHeader";
@@ -10,10 +10,12 @@ import ItemSeparator from "./ItemSeparator";
 
 const TempThresholdRow = connect((state: AppState) => ({
   selectedTempUnit: state.tempUnit,
-}))(({ temp, label, selectedTempUnit }) => (
+}))(({ temp, label, labelOnEndEditing, selectedTempUnit }) => (
   <TableRowItem
     title={`${displayTemp(temp, selectedTempUnit)}º ${selectedTempUnit}`}
     rightLabel={label}
+    rightLabelEditable={true}
+    rightLabelOnEndEditing={labelOnEndEditing}
     onPress={() => {}}
   />
 ));
@@ -23,7 +25,11 @@ interface RecsScreenListItem {
   label: string;
 }
 
-function RecsScreen({ tempThresholds, tempThresholdLabels }) {
+function RecsScreen({
+  tempThresholds,
+  tempThresholdLabels,
+  setTempThresholdLabel,
+}) {
   return (
     <SafeAreaView style={styles.container}>
       <SectionList<RecsScreenListItem>
@@ -36,8 +42,14 @@ function RecsScreen({ tempThresholds, tempThresholdLabels }) {
             })),
           },
         ]}
-        renderItem={({ item }) => (
-          <TempThresholdRow temp={item.temp} label={item.label} />
+        renderItem={({ item, index }) => (
+          <TempThresholdRow
+            temp={item.temp}
+            label={item.label}
+            labelOnEndEditing={value => {
+              setTempThresholdLabel(value, index);
+            }}
+          />
         )}
         renderSectionHeader={({ section: { title } }) => (
           <TableRowHeader title={title} />
@@ -63,5 +75,5 @@ export default connect(
     tempThresholds: state.tempThresholds,
     tempThresholdLabels: state.tempThresholdLabels,
   }),
-  { setTempUnit }
+  { setTempThresholdLabel }
 )(RecsScreen);

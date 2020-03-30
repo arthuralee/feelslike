@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  TextInput,
+} from "react-native";
 
 export default function TableRowItem({
   title,
@@ -7,22 +13,48 @@ export default function TableRowItem({
   icon,
   rightElement,
   rightLabel,
+  rightLabelEditable,
+  rightLabelOnEndEditing,
 }: {
   title: string;
   onPress: () => void;
   icon?: React.ReactNode;
   rightElement?: React.ReactNode;
   rightLabel?: string;
+  rightLabelEditable?: boolean;
+  rightLabelOnEndEditing?: (value: string) => void;
 }) {
+  const [textValue, setTextValue] = useState(rightLabel);
+  const textInputRef = useRef(null);
+
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableHighlight
+      onPress={() => {
+        if (rightLabel && rightLabelEditable) {
+          textInputRef.current.focus();
+        }
+        onPress();
+      }}
+    >
       <View style={styles.item}>
         {icon ? <View style={styles.iconContainer}>{icon}</View> : null}
         <Text style={styles.title}>{title}</Text>
         {rightElement ? (
           <View>{rightElement}</View>
         ) : rightLabel ? (
-          <Text style={styles.rightTitle}>{rightLabel}</Text>
+          rightLabelEditable ? (
+            <TextInput
+              style={styles.rightTitle}
+              value={textValue}
+              ref={textInputRef}
+              onChangeText={setTextValue}
+              onEndEditing={() => {
+                rightLabelOnEndEditing(textValue);
+              }}
+            />
+          ) : (
+            <Text style={styles.rightTitle}>{rightLabel}</Text>
+          )
         ) : null}
       </View>
     </TouchableHighlight>
