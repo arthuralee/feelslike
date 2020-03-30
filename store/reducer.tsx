@@ -34,11 +34,13 @@ export default function reducer(state = initialState, action) {
       return { ...state, tempThresholdLabels: newTempThresholdLabels };
     case INCREMENT_TEMP_THRESHOLD:
     case DECREMENT_TEMP_THRESHOLD:
+      const step = action.type === INCREMENT_TEMP_THRESHOLD ? 1 : -1;
       const newTempThresholds = state.tempThresholds.slice();
       newTempThresholds[action.index] = updateTemp(
         newTempThresholds[action.index],
         state.tempUnit,
-        action.type === INCREMENT_TEMP_THRESHOLD ? 1 : -1
+        step,
+        newTempThresholds[action.index + step]
       );
       return { ...state, tempThresholds: newTempThresholds };
     default:

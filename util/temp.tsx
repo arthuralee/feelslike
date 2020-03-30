@@ -11,12 +11,26 @@ export function getThresholdIndex(temp, tempThresholds) {
 export function updateTemp(
   value: number,
   unit: TempUnit,
-  incrementValue: number
+  incrementValue: number,
+  limit?: number
 ) {
   const displayValue = displayTemp(value, unit);
+  const limitDisplayValue = limit ? displayTemp(limit, unit) : null;
+  let result;
   // Convert to F before incrementing/decrementing, and then
   // convert back so that the number changes in steps of 1
-  return unit === "C"
-    ? displayValue + incrementValue
-    : convertFtoC(displayValue + incrementValue);
+  result = displayValue + incrementValue;
+  if (
+    limitDisplayValue &&
+    ((incrementValue > 0 && result >= limitDisplayValue) ||
+      (incrementValue < 0 && result <= limitDisplayValue))
+  ) {
+    return value;
+  }
+
+  if (unit === "F") {
+    result = convertFtoC(result);
+  }
+
+  return result;
 }
