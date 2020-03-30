@@ -14,6 +14,7 @@ import HomeScreen from "./components/HomeScreen";
 import SettingsScreen from "./components/settings/SettingsScreen";
 import UnitsScreen from "./components/settings/UnitsScreen";
 import RecsScreen from "./components/settings/RecsScreen";
+import TempThresholdsScreen from "./components/settings/TempThresholdsScreen";
 
 enableScreens();
 
@@ -61,6 +62,11 @@ export default function App() {
             <Stack.Screen
               name="Customize recomendations"
               component={RecsScreen}
+              options={settingsHeaderOptions}
+            />
+            <Stack.Screen
+              name="Temperature thresholds"
+              component={TempThresholdsScreen}
               options={settingsHeaderOptions}
             />
           </Stack.Navigator>

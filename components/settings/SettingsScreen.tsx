@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  SectionList,
-  Settings,
-} from "react-native";
+import { StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { Linking } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -52,6 +46,13 @@ function SettingsScreen({ navigation, selectedTempUnit }) {
                 onPress={() => {
                   navigation.navigate("Customize recomendations");
                 }}
+                rightElement={
+                  <Ionicons
+                    name="ios-arrow-forward"
+                    size={20}
+                    color="rgba(0,0,0,0.4)"
+                  />
+                }
               />,
             ],
           },

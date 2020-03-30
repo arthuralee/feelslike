@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { connect } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
 import { AppState, setTempThresholdLabel } from "../../store/reducer";
 import { displayTemp } from "../../util/units";
@@ -20,37 +21,49 @@ const TempThresholdRow = connect((state: AppState) => ({
   />
 ));
 
-interface RecsScreenListItem {
-  temp: number;
-  label: string;
-}
-
 function RecsScreen({
   tempThresholds,
   tempThresholdLabels,
   setTempThresholdLabel,
+  navigation,
 }) {
   return (
     <SafeAreaView style={styles.container}>
-      <SectionList<RecsScreenListItem>
+      <SectionList<React.ReactElement>
         sections={[
           {
             title: "Recommendations",
-            data: tempThresholds.map((temp, i) => ({
-              temp,
-              label: tempThresholdLabels[i],
-            })),
+            data: tempThresholds.map((temp, i) => (
+              <TempThresholdRow
+                temp={temp}
+                label={tempThresholdLabels[i]}
+                labelOnEndEditing={value => {
+                  setTempThresholdLabel(value, i);
+                }}
+              />
+            )),
+          },
+          {
+            title: "Thresholds",
+            data: [
+              <TableRowItem
+                title="Set temperature thresholds"
+                key="recs"
+                onPress={() => {
+                  navigation.navigate("Temperature thresholds");
+                }}
+                rightElement={
+                  <Ionicons
+                    name="ios-arrow-forward"
+                    size={20}
+                    color="rgba(0,0,0,0.4)"
+                  />
+                }
+              />,
+            ],
           },
         ]}
-        renderItem={({ item, index }) => (
-          <TempThresholdRow
-            temp={item.temp}
-            label={item.label}
-            labelOnEndEditing={value => {
-              setTempThresholdLabel(value, index);
-            }}
-          />
-        )}
+        renderItem={({ item }) => item}
         renderSectionHeader={({ section: { title } }) => (
           <TableRowHeader title={title} />
         )}
@@ -64,9 +77,6 @@ function RecsScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  checkmarkContainer: {
-    marginVertical: "-100%",
   },
 });
 
