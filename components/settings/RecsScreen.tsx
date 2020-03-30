@@ -11,9 +11,12 @@ import ItemSeparator from "./ItemSeparator";
 
 const TempThresholdRow = connect((state: AppState) => ({
   selectedTempUnit: state.tempUnit,
-}))(({ temp, label, labelOnEndEditing, selectedTempUnit }) => (
+}))(({ temp, label, labelOnEndEditing, selectedTempUnit, isLastRow }) => (
   <TableRowItem
-    title={`${displayTemp(temp, selectedTempUnit)}º ${selectedTempUnit}`}
+    title={`${isLastRow ? ">" : "≤"} ${displayTemp(
+      temp,
+      selectedTempUnit
+    )}º ${selectedTempUnit}`}
     rightLabel={label}
     rightLabelEditable={true}
     rightLabelOnEndEditing={labelOnEndEditing}
@@ -33,13 +36,17 @@ function RecsScreen({
         sections={[
           {
             title: "Recommendations",
-            data: tempThresholds.map((temp, i) => (
+            data: [
+              ...tempThresholds,
+              tempThresholds[tempThresholds.length - 1],
+            ].map((temp, i) => (
               <TempThresholdRow
                 temp={temp}
                 label={tempThresholdLabels[i]}
                 labelOnEndEditing={value => {
                   setTempThresholdLabel(value, i);
                 }}
+                isLastRow={i === tempThresholds.length}
               />
             )),
           },
