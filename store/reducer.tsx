@@ -1,10 +1,12 @@
 import { TempUnit } from "../util/units";
 import { updateTemp } from "../util/temp";
+// import { persistor } from "../App";
 
 const SET_TEMP_UNIT = "SET_TEMP_UNIT";
 const SET_TEMP_THRESHOLD_LABEL = "SET_TEMP_THRESHOLD_LABEL";
 const INCREMENT_TEMP_THRESHOLD = "INCREMENT_TEMP_THRESHOLD";
 const DECREMENT_TEMP_THRESHOLD = "DECREMENT_TEMP_THRESHOLD";
+const RESET = "RESET";
 
 export type AppState = {
   tempUnit: TempUnit;
@@ -43,6 +45,9 @@ export default function reducer(state = initialState, action) {
         newTempThresholds[action.index + step]
       );
       return { ...state, tempThresholds: newTempThresholds };
+    case RESET:
+      // persistor.purge();
+      return initialState;
     default:
       return state;
   }
@@ -74,5 +79,11 @@ export function decrementTempThreshold(index: number) {
   return {
     type: DECREMENT_TEMP_THRESHOLD,
     index,
+  };
+}
+
+export function reset() {
+  return {
+    type: RESET,
   };
 }
