@@ -2,23 +2,22 @@
   "expo": {
     "name": "Feels Like",
     "slug": "feelslike",
+    "description": "A weather app that helps you plan out what to wear",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./creative/AppIcon-assets/Icon-App-1024x1024.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#E5F8FF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "bundleIdentifier": "io.skieslab.app.feelslike",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8764374147995434~9301248441"
       }
