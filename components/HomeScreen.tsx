@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   Text,
+  RefreshControl,
 } from "react-native";
 import * as Location from "expo-location";
 
@@ -14,7 +15,7 @@ import Mountains from "./Mountains";
 import SettingsButton from "./settings/SettingsButton";
 import CurrentWeatherBlock from "./CurrentWeatherBlock";
 import LocationStatusIndicator from "./LocationStatusIndicator";
-import { WeatherData, fetchWeather } from "../util/api";
+import { WeatherData, fetchWeather as fetchWeatherAPI } from "../util/api";
 import { LoadingWeatherBlock } from "./WeatherBlock";
 
 interface LocationData {
@@ -29,6 +30,7 @@ export default function HomeScreen({ navigation }) {
   const [weatherData, setWeatherData] = useState<WeatherData>({
     status: "idle",
   });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   async function fetchLocation() {
     try {
@@ -61,16 +63,21 @@ export default function HomeScreen({ navigation }) {
     }).start();
   };
 
+  function fetchWeather() {
+    fetchWeatherAPI(location).then(newWeatherData => {
+      setWeatherData(newWeatherData);
+      fadeInWeatherBlock();
+      setIsRefreshing(false);
+    });
+  }
+
   useEffect(() => {
     if (!location) {
       fetchLocation();
     }
-    if (location && weatherData.status === "idle") {
+    if (location && (weatherData.status === "idle" || isRefreshing)) {
       setWeatherData({ ...weatherData, status: "pending" });
-      fetchWeather(location).then(newWeatherData => {
-        setWeatherData(newWeatherData);
-        fadeInWeatherBlock();
-      });
+      fetchWeather();
     }
   }, [location]);
 
@@ -104,10 +111,19 @@ export default function HomeScreen({ navigation }) {
     );
   }
 
+  const onRefresh = React.useCallback(() => {
+    setIsRefreshing(true);
+    fetchLocation();
+  }, [isRefreshing]);
+
   return (
     <View style={styles.background}>
-      <ScrollView>
-        <SafeAreaView>
+      <SafeAreaView style={styles.fullHeight}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+        >
           {location ? (
             renderBody()
           ) : (
@@ -117,8 +133,8 @@ export default function HomeScreen({ navigation }) {
               />
             </View>
           )}
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
 
       <View style={styles.settingsButtonContainer}>
         <SafeAreaView>
@@ -132,6 +148,9 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  fullHeight: {
+    flex: 1,
+  },
   background: {
     flex: 1,
     backgroundColor: "#E5F8FF",
