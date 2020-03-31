@@ -1,6 +1,7 @@
 Things to do
 
-- Implement reverse geocoding to get location name
-- Implement fetching weather from API
 - Implement pull to refresh location and weather data
+- Implement short-lived cache/throttling for network requests
 - Add admob support
+- Implement "later" feature
+- Implement umbrella feature

@@ -1,8 +1,15 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
+import moment from "moment";
 
-export default function LastUpdatedLabel() {
-  return <Text style={styles.text}>Last updated 11:29 PM</Text>;
+export default function LastUpdatedLabel({ date }) {
+  return (
+    <Text style={styles.text}>
+      {date
+        ? `Updated ${moment(date).format("h:mm A")}`
+        : "Not updated recently"}
+    </Text>
+  );
 }
 
 const styles = StyleSheet.create({

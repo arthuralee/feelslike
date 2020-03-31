@@ -7,10 +7,21 @@ import Mountains from "./Mountains";
 import SettingsButton from "./settings/SettingsButton";
 import CurrentWeatherBlock from "./CurrentWeatherBlock";
 import LocationStatusIndicator from "./LocationStatusIndicator";
+import { WeatherData, fetchWeather } from "../util/api";
+import { LoadingWeatherBlock } from "./WeatherBlock";
+
+interface LocationData {
+  latitude: number;
+  longitude: number;
+  placeName: string;
+}
 
 export default function HomeScreen({ navigation }) {
-  const [location, setLocation] = useState(null);
-  const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  const [location, setLocation] = useState<LocationData>(null);
+  const [isFetchingLocation, setIsFetchingLocation] = useState(true);
+  const [weatherData, setWeatherData] = useState<WeatherData>({
+    status: "idle",
+  });
 
   async function fetchLocation() {
     try {
@@ -37,8 +48,13 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     if (!location) {
-      setIsFetchingLocation(true);
       fetchLocation();
+    }
+    if (location && weatherData.status === "idle") {
+      setWeatherData({ ...weatherData, status: "pending" });
+      fetchWeather(location).then(newWeatherData => {
+        setWeatherData(newWeatherData);
+      });
     }
   }, [location]);
 
@@ -48,9 +64,15 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{location.placeName}</Text>
         </View>
-        <CurrentWeatherBlock temperature={4} />
+        {weatherData.status === "success" ? (
+          <CurrentWeatherBlock
+            temperature={weatherData.now.apparentTemperature}
+          />
+        ) : weatherData.status === "pending" ? (
+          <LoadingWeatherBlock />
+        ) : null}
         <View style={styles.lastUpdatedContainer}>
-          <LastUpdatedLabel />
+          <LastUpdatedLabel date={weatherData.lastUpdated} />
         </View>
       </>
     );
