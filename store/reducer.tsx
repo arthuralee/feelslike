@@ -12,6 +12,7 @@ export type AppState = {
   tempUnit: TempUnit;
   tempThresholds: Array<number>;
   tempThresholdLabels: Array<string>;
+  adsEnabled: boolean;
 };
 
 const initialState: AppState = {
@@ -24,6 +25,7 @@ const initialState: AppState = {
     "Light jacket",
     "T-shirt",
   ],
+  adsEnabled: true,
 };
 
 export default function reducer(state = initialState, action) {
@@ -46,7 +48,6 @@ export default function reducer(state = initialState, action) {
       );
       return { ...state, tempThresholds: newTempThresholds };
     case RESET:
-      // persistor.purge();
       return initialState;
     default:
       return state;

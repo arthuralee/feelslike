@@ -17,6 +17,7 @@ import CurrentWeatherBlock from "./CurrentWeatherBlock";
 import LocationStatusIndicator from "./LocationStatusIndicator";
 import { WeatherData, fetchWeather as fetchWeatherAPI } from "../util/api";
 import { LoadingWeatherBlock } from "./WeatherBlock";
+import AdUnit from "./AdUnit";
 
 interface LocationData {
   latitude: number;
@@ -143,6 +144,7 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <Mountains />
+      <AdUnit />
     </View>
   );
 }
