@@ -1,5 +1,6 @@
 Things to do
 
-- Implement geolocation to get lat and long
 - Implement reverse geocoding to get location name
+- Implement fetching weather from API
+- Implement pull to refresh location and weather data
 - Add admob support
