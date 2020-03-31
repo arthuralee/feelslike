@@ -43,10 +43,10 @@ function WeatherBlock({
 
 export function LoadingWeatherBlock() {
   return (
-    <View style={styles.shadowContainer}>
+    <View style={[styles.shadowContainer, styles.loadingContainer]}>
       <LinearGradient
         style={styles.gradientContainer}
-        colors={["#ddd", "#aaa"]}
+        colors={["#bbb", "#999"]}
       >
         <View style={styles.topContainer}>
           <Text style={styles.timeText}></Text>
@@ -70,6 +70,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 6,
     elevation: 2,
+  },
+  loadingContainer: {
+    opacity: 0.4,
   },
   gradientContainer: {
     justifyContent: "center",
