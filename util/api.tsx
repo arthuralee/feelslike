@@ -1,5 +1,9 @@
+import Constants from "expo-constants";
+
+const ENDPOINT =
+  Constants.manifest.releaseChannel === "prod" ? "weather" : "mock";
 const API_KEY = "toEqcAA2dV5yntp8qIGcI5a6XaBPFEYj7EOORODV";
-const API_URL = "https://api.feelslike.app.skieslab.io/mock";
+const API_URL = `https://api.feelslike.app.skieslab.io/${ENDPOINT}`;
 
 interface WeatherCondition {
   apparentTemperature: number;
