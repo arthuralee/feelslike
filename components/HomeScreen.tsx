@@ -7,6 +7,8 @@ import {
   View,
   Text,
   RefreshControl,
+  AppState,
+  AppStateStatus,
 } from "react-native";
 import * as Location from "expo-location";
 
@@ -77,10 +79,28 @@ export default function HomeScreen({ navigation }) {
       fetchLocation();
     }
     if (location && (weatherData.status === "idle" || isRefreshing)) {
-      setWeatherData({ ...weatherData, status: "pending" });
+      if (!isRefreshing) {
+        setWeatherData({ ...weatherData, status: "pending" });
+      }
       fetchWeather();
     }
   }, [location]);
+
+  const [appState, setAppState] = useState(AppState.currentState);
+
+  useEffect(() => {
+    function handleAppStateChange(nextAppState: AppStateStatus) {
+      if (appState.match(/inactive|background/) && nextAppState === "active") {
+        setIsRefreshing(true);
+        fetchLocation();
+      }
+      setAppState(nextAppState);
+    }
+    AppState.addEventListener("change", handleAppStateChange);
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  });
 
   function renderBody() {
     return (
