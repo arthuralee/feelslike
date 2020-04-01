@@ -3,7 +3,7 @@
     "name": "Feels Like",
     "slug": "feelslike",
     "description": "A weather app that helps you plan out what to wear",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "platforms": ["ios"],
     "version": "1.0.0",

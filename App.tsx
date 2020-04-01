@@ -6,7 +6,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, StatusBar } from "react-native";
 
 import reducer from "./store/reducer";
 import BlankScreen from "./components/BlankScreen";
@@ -40,6 +40,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<BlankScreen />}>
+        <StatusBar barStyle="dark-content" />
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
